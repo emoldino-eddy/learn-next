@@ -1,21 +1,12 @@
 'use client';
 import Image from 'next/image';
-import { UpdateInvoice, DeleteInvoice } from '@/app/ui/invoices/buttons';
-import InvoiceStatus from '@/app/ui/invoices/status';
-import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
-// import { fetchFilteredInvoices } from '@/app/lib/data';
+
 import { getAllPokemon } from '@/app/lib/poke-data';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 
-export default function PokesTable({
-  query,
-  currentPage,
-}: {
-  query?: string;
-  currentPage?: number;
-}) {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
+export default function PokesTable() {
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       queryKey: ['pokemon'],
       queryFn: getAllPokemon,
@@ -48,14 +39,16 @@ export default function PokesTable({
     <div className="p-4 grid-cols-2 md:grid-cols-4 gap-4">
       {data?.pages.map((page, i) => (
         <div key={i}>
-          {page.results.map((pokemon: any) => (
+          {page.results.map((pokemon: { name: string; image: string }) => (
             <div
               key={pokemon.name}
               className="border rounded-xl p-4 flex flex-col items-center shadow-md"
             >
-              <img
+              <Image
                 src={pokemon.image}
                 alt={pokemon.name}
+                width={100}
+                height={100}
                 className="w-20 h-20 object-contain mb-2"
               />
               <p className="capitalize font-medium">{pokemon.name}</p>
