@@ -8,9 +8,6 @@ export default function Page() {
         <h1 className={`${lusitana.className} text-2xl`}>Pockmons</h1>
       </div>
       <Pokemon />
-      {/* <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
-            <Table query={query} currentPage={currentPage} />
-          </Suspense> */}
     </div>
   );
 }
