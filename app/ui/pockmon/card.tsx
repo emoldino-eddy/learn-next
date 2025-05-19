@@ -5,23 +5,15 @@ import { getAllPokemon } from '@/packages/api/poke-data';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 
-interface PokemonProps {
-  results: {name: string, image: string, id: number}[]
-  hasMore: boolean,
-  nextOffset: number,
-}
-
-export default function Pokemon(props: PokemonProps) {
+export default function Pokemon() {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       queryKey: ['pokemon'],
-      queryFn: getAllPokemon,
-      initialData: (() => {
-        return{
-          pages: [props],
-          pageParams: [0]
-      }}),
-      getNextPageParam: (lastPage) => {
+      queryFn: async ({ pageParam }) => {
+        await new Promise(resolve => setTimeout(resolve, 10000));
+        return getAllPokemon({ pageParam });
+      },
+      getNextPageParam: (lastPage: {hasMore: boolean, nextOffset: number}) => {
         return lastPage.hasMore ? lastPage.nextOffset : undefined;
       },
       initialPageParam: 0,
