@@ -15,7 +15,10 @@ export default function Pokemon( props : PokemonProps) {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       queryKey: ['pokemon'],
-      queryFn: getAllPokemon,
+      queryFn: async ({ pageParam }) => {
+        await new Promise(resolve => setTimeout(resolve, 5000));
+        return getAllPokemon({ pageParam });
+      },
       initialData: (() => {
         return {
           pages: [props],
