@@ -1,5 +1,5 @@
 import { lusitana } from '@/app/ui/fonts';
-import Table from '@/app/ui/pockmon/table';
+import Pokemon from '@/app/ui/pockmon/card';
 
 export default function Page() {
   return (
@@ -7,7 +7,7 @@ export default function Page() {
       <div className="flex w-full items-center justify-between">
         <h1 className={`${lusitana.className} text-2xl`}>Pockmons</h1>
       </div>
-      <Table />
+      <Pokemon />
       {/* <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
             <Table query={query} currentPage={currentPage} />
           </Suspense> */}

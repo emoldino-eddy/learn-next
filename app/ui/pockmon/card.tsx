@@ -5,7 +5,7 @@ import { getAllPokemon } from '@/app/lib/poke-data';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 
-export default function PokesTable() {
+export default function Pokemon() {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       queryKey: ['pokemon'],
@@ -15,6 +15,7 @@ export default function PokesTable() {
       },
       initialPageParam: 0,
     });
+    
   const observerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -56,9 +57,8 @@ export default function PokesTable() {
           ))}
         </div>
       ))}
-      <div ref={observerRef} className="col-span-full py-4 text-center">
-        {isFetchingNextPage ? 'Loading more...' : 'Scroll to load more'}
-      </div>
+      <div ref={observerRef} className="col-span-full py-4 text-center"/>
+        
     </div>
   );
 }
