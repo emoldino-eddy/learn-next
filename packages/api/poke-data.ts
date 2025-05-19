@@ -11,6 +11,7 @@ export async function getAllPokemon({ pageParam = 0 }) {
     results.map(async (pokemon: { name: string; url: string }) => {
       const details = await axios.get(pokemon.url);
       return {
+        id: details.data.id,
         name: pokemon.name,
         image: details.data.sprites.other['official-artwork'].front_default,
       };

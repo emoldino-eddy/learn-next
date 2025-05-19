@@ -3,7 +3,6 @@ import { inter } from '@/app/ui/fonts';
 import { Metadata } from 'next';
 import QueryProvider from './query-provider';
 
-
 export const metadata: Metadata = {
   title: {
     template: '%s | Acme Dashboard',
@@ -21,7 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
-        <QueryProvider>{children}</QueryProvider>
+        <QueryProvider>
+          {children}
+        </QueryProvider>
       </body>
     </html>
   );
