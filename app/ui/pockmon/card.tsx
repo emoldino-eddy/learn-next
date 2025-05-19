@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 
-import { getAllPokemon } from '@/app/lib/poke-data';
+import { getAllPokemon } from '@/packages/api/poke-data';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 
