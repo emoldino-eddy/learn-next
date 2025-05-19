@@ -2,7 +2,6 @@ import '@/app/ui/global.css';
 import { inter } from '@/app/ui/fonts';
 import { Metadata } from 'next';
 import QueryProvider from './query-provider';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 export const metadata: Metadata = {
   title: {
@@ -23,7 +22,6 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased`}>
         <QueryProvider>
           {children}
-          <ReactQueryDevtools initialIsOpen={false} />
         </QueryProvider>
       </body>
     </html>

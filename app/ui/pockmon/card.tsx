@@ -10,7 +10,7 @@ export default function Pokemon() {
     useInfiniteQuery({
       queryKey: ['pokemon'],
       queryFn: async ({ pageParam }) => {
-        await new Promise(resolve => setTimeout(resolve, 10000));
+        await new Promise(resolve => setTimeout(resolve, 5000));
         return getAllPokemon({ pageParam });
       },
       getNextPageParam: (lastPage: {hasMore: boolean, nextOffset: number}) => {
