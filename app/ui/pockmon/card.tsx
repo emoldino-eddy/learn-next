@@ -5,7 +5,18 @@ import { getAllPokemon } from '@/packages/api/poke-data';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 
-export default function Pokemon({ initialData }: any) {
+interface PokemonProps {
+  initialData: {
+    pages: {
+      results: {name: string, image: string, id: number}[]
+      hasMore: boolean
+      nextOffset: number
+    }[],
+    pageParams: number[]
+  }
+}
+
+export default function Pokemon( {initialData} : PokemonProps) {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       queryKey: ['pokemon'],

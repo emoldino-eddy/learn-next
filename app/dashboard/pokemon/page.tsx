@@ -26,7 +26,7 @@ export default async function Page() {
       hasMore: data.next !== null,
       nextOffset: 20
     }],
-    pageParams: 0
+    pageParams: [0]
   };
 
   return (
