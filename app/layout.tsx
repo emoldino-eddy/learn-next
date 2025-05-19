@@ -1,7 +1,6 @@
 import '@/app/ui/global.css';
 import { inter } from '@/app/ui/fonts';
 import { Metadata } from 'next';
-import QueryProvider from './query-provider';
 
 
 export const metadata: Metadata = {
@@ -21,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
-        <QueryProvider>{children}</QueryProvider>
+        {children}
       </body>
     </html>
   );
