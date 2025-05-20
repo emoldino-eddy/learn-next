@@ -2,7 +2,7 @@
 import Image from 'next/image';
 
 import { getPokeApi } from '@/packages/api/poke-data';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, QueryFunctionContext } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 
 interface PokemonProps {
@@ -12,6 +12,10 @@ interface PokemonProps {
 }
 
 export default function Pokemon( props : PokemonProps) {
+  const getPokemonList = (context: QueryFunctionContext<string[], number>) => {
+      return getPokeApi().getAllPokemon({ pageParam: context.pageParam })
+  }
+
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       queryKey: ['pokemon'],
@@ -19,7 +23,7 @@ export default function Pokemon( props : PokemonProps) {
       //   await new Promise(resolve => setTimeout(resolve, 5000));
       //   return getPokeApi().getAllPokemon({ pageParam });
       // },
-      queryFn: ({ pageParam }) => getPokeApi().getAllPokemon({ pageParam }),
+      queryFn: getPokemonList,
       initialData: (() => {
         return {
           pages: [props],
