@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 
-import { getAllPokemon } from '@/packages/api/poke-data';
+import { getPokeApi } from '@/packages/api/poke-data';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 
@@ -15,10 +15,11 @@ export default function Pokemon( props : PokemonProps) {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       queryKey: ['pokemon'],
-      queryFn: async ({ pageParam }) => {
-        await new Promise(resolve => setTimeout(resolve, 5000));
-        return getAllPokemon({ pageParam });
-      },
+      // queryFn: async ({ pageParam }) => {
+      //   await new Promise(resolve => setTimeout(resolve, 5000));
+      //   return getPokeApi().getAllPokemon({ pageParam });
+      // },
+      queryFn: ({ pageParam }) => getPokeApi().getAllPokemon({ pageParam }),
       initialData: (() => {
         return {
           pages: [props],
