@@ -1,9 +1,9 @@
 import { lusitana } from '@/app/ui/fonts';
 import Pokemon from '@/app/ui/pockmon/card';
-import { getAllPokemon } from '@/packages/api/poke-data';
+import { getPokeApi } from '@/packages/api/poke-data';
 
 export default async function Page() {
-  const initialData = await getAllPokemon({pageParam: 0});
+  const initialData = await getPokeApi().getAllPokemon({ pageParam: 0 });
 
   return (
     <div className="w-full">
