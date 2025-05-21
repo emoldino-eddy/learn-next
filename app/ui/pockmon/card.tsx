@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
-import { pokemonQueries } from '@/packages/query-kit/pokemon';
+import { UsePokemonQueries } from '@/packages/query-kit/pokemon';
 
 interface PokemonProps {
   results: { name: string; image: string; id: number }[];
@@ -13,7 +13,7 @@ interface PokemonProps {
 export default function Pokemon(props: PokemonProps) {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      ...pokemonQueries.list(),
+      ...UsePokemonQueries().list(),
       initialData: () => {
         return {
           pages: [props],
