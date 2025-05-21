@@ -2,7 +2,8 @@
 import Image from 'next/image';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
-import { usePokemonQueryOptions } from '@/packages/query-kit/pokemon';
+import { pokemonQueryOptions } from '@/packages/query-kit/queries/pokemon';
+import { getPokeApi } from '@/packages/api/poke-data';
 
 interface PokemonProps {
   results: { name: string; image: string; id: number }[];
@@ -11,15 +12,18 @@ interface PokemonProps {
 }
 
 export default function Pokemon(props: PokemonProps) {
-  const options = usePokemonQueryOptions();
+  // const options = usePokemonQueryOptions();
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      ...options.list(),
+      ...pokemonQueryOptions.list(),
       initialData: () => {
         return {
           pages: [props],
           pageParams: [0],
         };
+      },
+      meta: {
+        pokeApi: getPokeApi(),
       },
     });
 
