@@ -1,7 +1,7 @@
 import { infiniteQueryOptions } from '@tanstack/react-query';
 import { usePokeApi } from '@/app/dashboard/pokemon/store/api';
 
-export const UsePokemonQueries = () => {
+export const usePokemonQueryOptions = () => {
   const pokeApi = usePokeApi();
   const all = () => ['pokemon'] as const;
   const lists = () => [...all(), 'list'] as const;
@@ -10,7 +10,7 @@ export const UsePokemonQueries = () => {
     lists,
     list: () => {
       return infiniteQueryOptions({
-        queryKey: [...lists()],
+        queryKey: [...lists(), 'pokeAll'],
         queryFn: ({ pageParam }) => pokeApi.getAllPokemon({ pageParam }),
         getNextPageParam: (lastPage) => {
           return lastPage.hasMore ? lastPage.nextOffset : undefined;
