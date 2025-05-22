@@ -12,20 +12,6 @@ export class PokeApi {
       });
   }
 
-  // async getAllPokemon({ pageParam = 0 }) {
-  //   const limit = 20;
-  //   const offset = pageParam;
-
-  //   const pokemonList = await this.getPokemonBasic(offset, limit);
-  //   const detailResults = await this.getPokemonDetails(pokemonList.results);
-
-  //   return {
-  //     results: detailResults,
-  //     nextOffset: offset + limit,
-  //     hasMore: pokemonList.next !== null,
-  //   };
-  // }
-
   async getPokemonBasic({ limit = 20, pageParam = 0 }) {
     const response = await this.client.get(
       `/pokemon?offset=${pageParam}&limit=${limit}`

@@ -13,10 +13,9 @@ interface PokemonProps {
 }
 
 export default function Pokemon(props: PokemonProps) {
-  const limit = 20;
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      ...pokemonQueryOptions.basicList(limit),
+      ...pokemonQueryOptions.basicList(),
       initialData: {
         pages: [props],
         pageParams: [0],
@@ -50,7 +49,7 @@ export default function Pokemon(props: PokemonProps) {
     <div className="p-4 grid-cols-2 md:grid-cols-4 gap-4">
       {data?.pages.map((page) =>
         page.results.map((pokemon: any) => (
-          <PokemonImage pokemon={pokemon} key={pokemon.id} />
+          <PokemonImage pokemon={pokemon} key={pokemon.name} />
         ))
       )}
       <div ref={observerRef} className="col-span-full py-4 text-center" />

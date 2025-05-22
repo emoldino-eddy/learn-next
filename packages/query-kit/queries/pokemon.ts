@@ -4,7 +4,7 @@ import type { PokeApi } from '../../api/poke-data';
 export const pokemonQueryOptions = {
   all: () => ['pokemon'] as const,
   basicLists: () => [...pokemonQueryOptions.all(), 'basicList'] as const,
-  basicList: (limit: number) => {
+  basicList: (limit = 20) => {
     return infiniteQueryOptions({
       queryKey: [...pokemonQueryOptions.basicLists(), 'pokeBasicList'],
       queryFn: ({
@@ -16,7 +16,6 @@ export const pokemonQueryOptions = {
         }
 
         return meta.pokeApi.getPokemonBasic({
-          limit,
           pageParam: pageParam,
         });
       },
