@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { pokemonDetailSchema, pokemonBasicSchema } from './schema';
+import { pokemonBasicSchema, pokemonDetailResultSchema } from './schema';
 
 export class PokeApi {
   private client: AxiosInstance;
@@ -35,8 +35,7 @@ export class PokeApi {
 
   async getPokemonDetails(pokemonList: { url: string }) {
     const response = await this.client.get(pokemonList.url);
-    // return pokemonDetailSchema.parse(response);
-    return response.data;
+    return pokemonDetailResultSchema.parse(response.data);
   }
 }
 let pokeApi: PokeApi | undefined;

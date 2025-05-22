@@ -26,8 +26,8 @@ export default function PokemonImage({
     <div className="border rounded-xl p-4 flex flex-col items-center shadow-md">
       {isLoading ? (<div>Loading...</div>): (
         <Image
-          src={data?.image}
-          alt={data?.name}
+          src={data?.image || ''}
+          alt={pokemon.name}
           width={100}
           height={100}
           className="w-20 h-20 object-contain mb-2"
