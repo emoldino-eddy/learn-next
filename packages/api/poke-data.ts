@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
+import { pokemonDetailSchema, pokemonBasicSchema } from './schema';
 
 export class PokeApi {
   private client: AxiosInstance;
@@ -16,7 +17,7 @@ export class PokeApi {
     const offset = pageParam;
 
     const pokemonList = await this.getPokemonBasic(offset, limit);
-    const detailResults = await this.getPokemonDetails(pokemonList);
+    const detailResults = await this.getPokemonDetails(pokemonList.results);
 
     return {
       results: detailResults,
@@ -29,7 +30,7 @@ export class PokeApi {
     const response = await this.client.get(
       `/pokemon?offset=${offset}&limit=${limit}`
     );
-    return response.data.results;
+    return pokemonBasicSchema.parse(response.data);
   }
 
   async getPokemonDetails(pokemonList: { name: string; url: string }[]) {
@@ -43,7 +44,7 @@ export class PokeApi {
         };
       })
     );
-    return response;
+    return pokemonDetailSchema.parse(response);
   }
 }
 let pokeApi: PokeApi | undefined;
