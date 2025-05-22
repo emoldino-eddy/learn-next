@@ -8,7 +8,7 @@ export default function PokemonImage({
 }: {
   pokemon: { name: string; url: string };
 }) {
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     ...pokemonQueryOptions.detailList(pokemon),
     meta: {
       pokeApi: getPokeApi(),
@@ -24,15 +24,15 @@ export default function PokemonImage({
   });
   return (
     <div className="border rounded-xl p-4 flex flex-col items-center shadow-md">
-      {data?.image && (
+      {isLoading ? (<div>Loading...</div>): (
         <Image
-          src={data.image}
-          alt={data.name}
+          src={data?.image}
+          alt={data?.name}
           width={100}
           height={100}
           className="w-20 h-20 object-contain mb-2"
         />
-      ) }
+      )}
       <p className="capitalize font-medium">{data?.name || pokemon.name}</p>
     </div>
   );
