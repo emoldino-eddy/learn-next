@@ -1,26 +1,24 @@
 'use client';
-import Image from 'next/image';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 import { pokemonQueryOptions } from '@/packages/query-kit/queries/pokemon';
 import { getPokeApi } from '@/packages/api/poke-data';
+import PokemonImage from './image';
 
 interface PokemonProps {
-  results: { name: string; image: string; id: number }[];
-  hasMore: boolean;
-  nextOffset: number;
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: { name: string; url: string }[];
 }
 
 export default function Pokemon(props: PokemonProps) {
-  // const options = usePokemonQueryOptions();
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      ...pokemonQueryOptions.list(),
-      initialData: () => {
-        return {
-          pages: [props],
-          pageParams: [0],
-        };
+      ...pokemonQueryOptions.basicList(),
+      initialData: {
+        pages: [props],
+        pageParams: [0],
       },
       meta: {
         pokeApi: getPokeApi(),
@@ -49,24 +47,10 @@ export default function Pokemon(props: PokemonProps) {
 
   return (
     <div className="p-4 grid-cols-2 md:grid-cols-4 gap-4">
-      {data?.pages.flatMap((page) =>
-        page.results.map(
-          (pokemon: { name: string; image: string; id: number }) => (
-            <div
-              key={pokemon.id}
-              className="border rounded-xl p-4 flex flex-col items-center shadow-md"
-            >
-              <Image
-                src={pokemon.image}
-                alt={pokemon.name}
-                width={100}
-                height={100}
-                className="w-20 h-20 object-contain mb-2"
-              />
-              <p className="capitalize font-medium">{pokemon.name}</p>
-            </div>
-          )
-        )
+      {data?.pages.map((page) =>
+        page.results.map((pokemon: any) => (
+          <PokemonImage pokemon={pokemon} key={pokemon.name} />
+        ))
       )}
       <div ref={observerRef} className="col-span-full py-4 text-center" />
     </div>

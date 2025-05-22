@@ -8,14 +8,19 @@ export const pokemonBasicResultSchema = z.object({
 export const pokemonDetailResultSchema = z.object({
   id: z.number(),
   name: z.string(),
-  image: z.string(),
+  
+  sprites: z.object({
+    other: z.object({
+      'official-artwork': z.object({
+        front_default: z.string(),
+      }),
+    }),
+  }),
 });
 
 export const pokemonBasicSchema = z.object({
   count: z.number(),
-  next: z.string(),
+  next: z.string().nullable(),
   previous: z.string().nullable(),
   results: z.array(pokemonBasicResultSchema),
 });
-
-export const pokemonDetailSchema = z.array(pokemonDetailResultSchema);

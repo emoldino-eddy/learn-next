@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { pokemonDetailSchema, pokemonBasicSchema } from './schema';
+import { pokemonBasicSchema, pokemonDetailResultSchema } from './schema';
 
 export class PokeApi {
   private client: AxiosInstance;
@@ -12,39 +12,16 @@ export class PokeApi {
       });
   }
 
-  async getAllPokemon({ pageParam = 0 }) {
-    const limit = 20;
-    const offset = pageParam;
-
-    const pokemonList = await this.getPokemonBasic(offset, limit);
-    const detailResults = await this.getPokemonDetails(pokemonList.results);
-
-    return {
-      results: detailResults,
-      nextOffset: offset + limit,
-      hasMore: pokemonList.next !== null,
-    };
-  }
-
-  async getPokemonBasic(offset: number, limit: number) {
+  async getPokemonBasic({ limit = 20, pageParam = 0 }) {
     const response = await this.client.get(
-      `/pokemon?offset=${offset}&limit=${limit}`
+      `/pokemon?offset=${pageParam}&limit=${limit}`
     );
     return pokemonBasicSchema.parse(response.data);
   }
 
-  async getPokemonDetails(pokemonList: { name: string; url: string }[]) {
-    const response = await Promise.all(
-      pokemonList.map(async (pokemon: { name: string; url: string }) => {
-        const details = await this.client.get(pokemon.url);
-        return {
-          id: details.data.id,
-          name: pokemon.name,
-          image: details.data.sprites.other['official-artwork'].front_default,
-        };
-      })
-    );
-    return pokemonDetailSchema.parse(response);
+  async getPokemonDetails(pokemonList: { url: string }) {
+    const response = await this.client.get(pokemonList.url);
+    return pokemonDetailResultSchema.parse(response.data);
   }
 }
 let pokeApi: PokeApi | undefined;
