@@ -9,7 +9,11 @@ import {
 } from './definitions';
 import { formatCurrency } from './utils';
 
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
+if (!process.env.POSTGRES_URL) {
+  throw new Error('POSTGRES_URL environment variable is required');
+}
+
+const sql = postgres(process.env.POSTGRES_URL, { ssl: 'require' });
 
 export async function fetchRevenue() {
   try {
@@ -70,8 +74,10 @@ export async function fetchCardData() {
 
     const numberOfInvoices = Number(data[0][0].count ?? '0');
     const numberOfCustomers = Number(data[1][0].count ?? '0');
-    const totalPaidInvoices = formatCurrency(data[2][0].paid ?? '0');
-    const totalPendingInvoices = formatCurrency(data[2][0].pending ?? '0');
+    const totalPaidInvoices = formatCurrency(Number(data[2][0].paid ?? '0'));
+    const totalPendingInvoices = formatCurrency(
+      Number(data[2][0].pending ?? '0')
+    );
 
     return {
       numberOfCustomers,
@@ -88,7 +94,7 @@ export async function fetchCardData() {
 const ITEMS_PER_PAGE = 6;
 export async function fetchFilteredInvoices(
   query: string,
-  currentPage: number,
+  currentPage: number
 ) {
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 

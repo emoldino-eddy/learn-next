@@ -7,7 +7,6 @@ import { generatePagination } from '@/app/lib/utils';
 import { usePathname, useSearchParams } from 'next/navigation';
 
 export default function Pagination({ totalPages }: { totalPages: number }) {
-  
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get('page')) || 1;
@@ -17,11 +16,10 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
     const params = new URLSearchParams(searchParams);
     params.set('page', pageNumber.toString());
     return `${pathname}?${params.toString()}`;
-  }
+  };
 
-  if(totalPages === 1) return null;
-  
-  
+  if (totalPages === 1) return null;
+
   return (
     <>
       {/*  NOTE: Uncomment this code in Chapter 11 */}
@@ -44,7 +42,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
 
             return (
               <PaginationNumber
-                key={`${page}-${index}`}
+                key={`${page.toString()}-${index.toString()}`}
                 href={createPageURL(page)}
                 page={page}
                 position={position}
@@ -83,7 +81,7 @@ function PaginationNumber({
       'z-10 bg-blue-600 border-blue-600 text-white': isActive,
       'hover:bg-gray-100': !isActive && position !== 'middle',
       'text-gray-300': position === 'middle',
-    },
+    }
   );
 
   return isActive || position === 'middle' ? (
@@ -111,7 +109,7 @@ function PaginationArrow({
       'hover:bg-gray-100': !isDisabled,
       'mr-2 md:mr-4': direction === 'left',
       'ml-2 md:ml-4': direction === 'right',
-    },
+    }
   );
 
   const icon =
