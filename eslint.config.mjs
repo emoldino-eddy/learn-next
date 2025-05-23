@@ -15,6 +15,7 @@ export default tseslint.config(
   react.configs.flat['jsx-runtime'],
   reactHooks.configs['recommended-latest'],
   {
+    files: ['**/*.ts', '**/*.tsx'],
     languageOptions: {
       parserOptions: {
         tsconfigRootDir: import.meta.dirname,
@@ -37,6 +38,7 @@ export default tseslint.config(
       ...nextPlugin.configs['core-web-vitals'].rules,
     },
   }
+
   // reactPlugin.configs.flat.recommended,
   // reactPlugin.configs.flat['jsx-runtime'],
   // reactHooks.configs['recommended-latest']
