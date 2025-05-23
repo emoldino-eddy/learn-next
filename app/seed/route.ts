@@ -101,7 +101,7 @@
 //   return insertedRevenue;
 // }
 
-export async function GET() {
+export function GET() {
   try {
     // const result = await sql.begin((sql) => [
     //   seedUsers(),

@@ -7,16 +7,20 @@ import { redirect } from 'next/navigation';
 import postgres from 'postgres';
 import { z } from 'zod';
 
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
+if (!process.env.POSTGRES_URL) {
+  throw new Error('POSTGRES_URL environment variable is required');
+}
 
-export type State = {
+const sql = postgres(process.env.POSTGRES_URL, { ssl: 'require' });
+
+export interface State {
   errors?: {
     customerId?: string[];
     amount?: string[];
     status?: string[];
   };
   message?: string | null;
-};
+}
 
 const FormSchema = z.object({
   id: z.string(),

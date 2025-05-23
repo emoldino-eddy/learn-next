@@ -17,27 +17,26 @@ export default function PokemonImage({
       return {
         id: data.id,
         name: data.name,
-        image:
-          data.sprites.other['official-artwork'].front_default
+        image: data.sprites.other['official-artwork'].front_default,
       };
     },
   });
   return (
     <div className="border rounded-xl p-4 flex flex-col items-center shadow-md">
-      {isLoading && (<div>Loading...</div>)}
+      {isLoading && <div>Loading...</div>}
       {data && (
         <>
-        <Image
-          src={data.image}
-          alt={data.name}
-          width={100}
-          height={100}
-          className="w-20 h-20 object-contain mb-2"
-        />
-        <p className="capitalize font-medium">{data.name}</p>
-      </>
+          <Image
+            src={data.image}
+            alt={data.name}
+            width={100}
+            height={100}
+            className="w-20 h-20 object-contain mb-2"
+          />
+          <p className="capitalize font-medium">{data.name}</p>
+        </>
       )}
-      {error && (<div>Error: {error.message}</div>)}
+      {error && <div>Error: {error.message}</div>}
     </div>
   );
 }

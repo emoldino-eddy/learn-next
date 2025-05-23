@@ -19,7 +19,7 @@ export const pokemonQueryOptions = {
           pageParam: pageParam,
         });
       },
-      getNextPageParam: (lastPage, _, lastPageParam,) => {
+      getNextPageParam: (lastPage, _, lastPageParam) => {
         return lastPage.next ? lastPageParam + limit : undefined;
       },
       initialPageParam: 0,
@@ -28,7 +28,7 @@ export const pokemonQueryOptions = {
   detailLists: () => [...pokemonQueryOptions.all(), 'detailList'] as const,
   detailList: (pokemonList: { name: string; url: string }) => {
     return queryOptions({
-      queryKey: [...pokemonQueryOptions.detailLists(), pokemonList.name],
+      queryKey: [...pokemonQueryOptions.detailLists(), pokemonList],
       queryFn: ({ meta }) => {
         if (!meta?.pokeApi) {
           throw new Error('Missing pokeApi');
