@@ -7,10 +7,7 @@ export const formatCurrency = (amount: number) => {
   });
 };
 
-export const formatDateToLocal = (
-  dateStr: string,
-  locale: string = 'en-US',
-) => {
+export const formatDateToLocal = (dateStr: string, locale = 'en-US') => {
   const date = new Date(dateStr);
   const options: Intl.DateTimeFormatOptions = {
     day: 'numeric',
@@ -29,7 +26,7 @@ export const generateYAxis = (revenue: Revenue[]) => {
   const topLabel = Math.ceil(highestRecord / 1000) * 1000;
 
   for (let i = topLabel; i >= 0; i -= 1000) {
-    yAxisLabels.push(`$${i / 1000}K`);
+    yAxisLabels.push(`$${(i / 1000).toString()}K`);
   }
 
   return { yAxisLabels, topLabel };
@@ -57,7 +54,7 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
   // If the current page is somewhere in the middle,
   // show the first page, an ellipsis, the current page and its neighbors,
   // another ellipsis, and the last page.
-  
+
   return [
     1,
     '...',

@@ -5,11 +5,16 @@ import { pokemonQueryOptions } from '@/packages/query-kit/queries/pokemon';
 import { getPokeApi } from '@/packages/api/poke-data';
 import PokemonImage from './image';
 
+interface PokemonBasic {
+  name: string;
+  url: string;
+}
+
 interface PokemonProps {
   count: number;
   next: string | null;
   previous: string | null;
-  results: { name: string; url: string }[];
+  results: PokemonBasic[];
 }
 
 export default function Pokemon(props: PokemonProps) {
@@ -31,7 +36,7 @@ export default function Pokemon(props: PokemonProps) {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
-          fetchNextPage();
+          void fetchNextPage();
         }
       },
       { threshold: 1 }
@@ -47,8 +52,8 @@ export default function Pokemon(props: PokemonProps) {
 
   return (
     <div className="p-4 grid-cols-2 md:grid-cols-4 gap-4">
-      {data?.pages.map((page) =>
-        page.results.map((pokemon: any) => (
+      {data.pages.map((page) =>
+        page.results.map((pokemon: PokemonBasic) => (
           <PokemonImage pokemon={pokemon} key={pokemon.name} />
         ))
       )}
